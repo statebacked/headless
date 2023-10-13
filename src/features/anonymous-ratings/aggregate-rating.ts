@@ -8,13 +8,16 @@ import { aggregateRatingMachineName, ratingMachineName } from "./constants";
 // anyone with access can read
 export const allowRead: AllowRead = () => true;
 
-// we only accept writes from the rating machine
+// anyone can create us but we only accept writes from the rating machine
 export const allowWrite: AllowWrite<Context> = ({
+  machineInstanceName,
   authContext: { stateBackedSender },
   context,
+  type,
 }) =>
-  !!stateBackedSender &&
-  stateBackedSender.machineName === ratingMachineName &&
-  stateBackedSender.machineInstanceName.endsWith(context.item);
+  (type === "initialization" && context.item === machineInstanceName) ||
+  (!!stateBackedSender &&
+    stateBackedSender.machineName === ratingMachineName &&
+    stateBackedSender.machineInstanceName.endsWith(context.item));
 
 export default makeAggregateRatingMachine(aggregateRatingMachineName);

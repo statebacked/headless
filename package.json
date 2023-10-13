@@ -2,9 +2,12 @@
   "name": "@statebacked/headless-machines",
   "version": "0.1.0",
   "description": "Headless backend components",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "prettier": "prettier --write src",
+    "prettier": "prettier --write src scripts",
+    "build": "tsc",
+    "install-feature": "npm run build && node scripts/install.mjs",
+    "smply": "smply",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -12,11 +15,10 @@
     "url": "git+https://github.com/statebacked/headless.git"
   },
   "keywords": [
-    "'State",
-    "Backed'",
+    "State Backed",
+    "state-backed",
     "headless",
-    "'state",
-    "machine'"
+    "state machine"
   ],
   "author": "Adam Berger <adam@statebacked.dev>",
   "license": "MIT",
@@ -29,6 +31,9 @@
     "xstate": "^4.38.2"
   },
   "devDependencies": {
-    "prettier": "^3.0.3"
+    "@types/node": "^20.8.5",
+    "prettier": "^3.0.3",
+    "smply": "^0.1.17",
+    "typescript": "^5.2.2"
   }
 }

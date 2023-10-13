@@ -1,2 +1,2 @@
-export const ratingMachineName = "anonymous-rating";
-export const aggregateRatingMachineName = "anonymous-aggregate-rating";
+export const ratingMachineName = "headless-anonymous-rating";
+export const aggregateRatingMachineName = "headless-anonymous-aggregate-rating";

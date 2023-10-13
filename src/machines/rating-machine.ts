@@ -13,7 +13,9 @@ export type Event = {
 export type Context = {
   item: string;
   rater: string;
-  rating: number | null;
+  public: {
+    rating: number | null;
+  };
 };
 
 // Represents a single rating of an item by a rater.
@@ -32,7 +34,9 @@ export const makeRatingMachine = (
     context: {
       item: "",
       rater: "",
-      rating: null,
+      public: {
+        rating: null,
+      },
     },
     states: {
       unrated: {
@@ -43,7 +47,9 @@ export const makeRatingMachine = (
               assign({
                 item: (_, event) => event.item,
                 rater: (_, event) => event.rater,
-                rating: (_, event) => getRating(event),
+                public: (_, event) => ({
+                  rating: getRating(event),
+                }),
               }),
               persistentSendTo(
                 ((ctx: Context) => ({
@@ -67,9 +73,13 @@ export const makeRatingMachine = (
           rate: {
             actions: pure((ctx, event) => {
               const rating = getRating(event);
-              const ratingChange = rating - ctx.rating!;
+              const ratingChange = rating - ctx.public.rating!;
               return [
-                assign({ rating }),
+                assign({
+                  public: {
+                    rating,
+                  },
+                }),
                 persistentSendTo(
                   {
                     type: "statebacked.instance",
@@ -77,11 +87,11 @@ export const makeRatingMachine = (
                     machineName: aggregateRatingMachineName,
                     machineInstanceName: ctx.item,
                   },
-                  (_, event) => ({
+                  {
                     type: "addToRating",
                     rating: ratingChange,
                     count: 0,
-                  }),
+                  },
                 ),
               ];
             }),

@@ -8,8 +8,10 @@ export type Event = {
 
 export type Context = {
   item: string;
-  totalRating: number;
-  count: number;
+  public: {
+    totalRating: number;
+    count: number;
+  };
 };
 
 // Represents the aggregate rating by all raters
@@ -22,8 +24,10 @@ export const makeAggregateRatingMachine = (id: string) =>
     },
     context: {
       item: "",
-      totalRating: 0,
-      count: 0,
+      public: {
+        totalRating: 0,
+        count: 0,
+      },
     },
     initial: "aggregating",
     states: {
@@ -32,8 +36,10 @@ export const makeAggregateRatingMachine = (id: string) =>
           addToRating: {
             actions: [
               assign({
-                totalRating: (ctx, event) => ctx.totalRating + event.rating,
-                count: (ctx, event) => ctx.count + event.count,
+                public: (ctx, event) => ({
+                  totalRating: ctx.public.totalRating + event.rating,
+                  count: ctx.public.count + event.count,
+                }),
               }),
             ],
           },

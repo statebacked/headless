@@ -1,5 +1,5 @@
 {
-  "name": "@statebacked/headless-machines",
+  "name": "@statebacked/headless",
   "version": "0.1.0",
   "description": "Headless backend components",
   "type": "module",
@@ -27,12 +27,15 @@
   },
   "homepage": "https://github.com/statebacked/headless#readme",
   "dependencies": {
+    "@statebacked/client": "^0.1.37",
     "@statebacked/machine": "^0.6.0",
     "xstate": "^4.38.2"
   },
   "devDependencies": {
     "@types/node": "^20.8.5",
+    "@types/react": "^18.2.28",
     "prettier": "^3.0.3",
+    "react": "^18.2.0",
     "smply": "^0.1.17",
     "typescript": "^5.2.2"
   }

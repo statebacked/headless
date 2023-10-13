@@ -1,9 +1,9 @@
 import { AllowRead, AllowWrite } from "@statebacked/machine";
 import {
   Context,
-  aggregateRatingMachine,
-} from "./machines/aggregate-rating-machine";
-import { ratingMachineName } from "./constants";
+  makeAggregateRatingMachine,
+} from "../../machines/aggregate-rating-machine";
+import { aggregateRatingMachineName, ratingMachineName } from "./constants";
 
 // anyone with access can read
 export const allowRead: AllowRead = () => true;
@@ -17,4 +17,4 @@ export const allowWrite: AllowWrite<Context> = ({
   stateBackedSender.machineName === ratingMachineName &&
   stateBackedSender.machineInstanceName.endsWith(context.item);
 
-export default aggregateRatingMachine;
+export default makeAggregateRatingMachine(aggregateRatingMachineName);

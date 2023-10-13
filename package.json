@@ -4,7 +4,7 @@
   "description": "Headless backend components",
   "main": "index.js",
   "scripts": {
-    "prettier": "prettier --write features",
+    "prettier": "prettier --write src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

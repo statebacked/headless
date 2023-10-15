@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "prettier": "prettier --write src scripts",
-    "build": "tsc",
+    "build": "tsc --outDir dist",
+    "prepublishOnly": "rollup --config rollup.config.mjs",
     "install-feature": "npm run build && node scripts/install.mjs",
     "smply": "smply",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -26,16 +27,21 @@
     "url": "https://github.com/statebacked/headless/issues"
   },
   "homepage": "https://github.com/statebacked/headless#readme",
+  "peerDependencies": {
+    "react": ">=16.0.0"
+  },
   "dependencies": {
     "@statebacked/client": "^0.1.37",
     "@statebacked/machine": "^0.6.0",
     "xstate": "^4.38.2"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.5",
     "@types/node": "^20.8.5",
     "@types/react": "^18.2.28",
     "prettier": "^3.0.3",
     "react": "^18.2.0",
+    "rollup": "^3.28.1",
     "smply": "^0.1.17",
     "typescript": "^5.2.2"
   }

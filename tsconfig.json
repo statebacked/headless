@@ -2,7 +2,6 @@
   "include": ["src/**/*.ts"],
   "compilerOptions": {
     "module": "ES2020",
-    "moduleResolution": "Node",
-    "outDir": "dist"
+    "moduleResolution": "Node"
   }
 }

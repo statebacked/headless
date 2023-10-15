@@ -2,15 +2,35 @@
   "name": "@statebacked/headless",
   "version": "0.1.0",
   "description": "Headless backend components",
-  "type": "module",
   "scripts": {
     "prettier": "prettier --write src scripts",
     "build": "tsc --outDir dist",
-    "prepublishOnly": "rollup --config rollup.config.mjs",
+    "prepublishOnly": "rollup --config rollup.config.mjs && tsc --emitDeclarationOnly --declaration --outDir types && echo '{ \"type\": \"commonjs\" }' > lib/package.json",
     "install-feature": "npm run build && node scripts/install.mjs",
     "smply": "smply",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "type": "module",
+  "main": "lib/index.js",
+  "module": "esm/index.js",
+  "types": "types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./types/index.d.ts",
+        "require": "./types/index.d.ts"
+      },
+      "default": {
+        "import": "./esm/index.js",
+        "require": "./lib/index.js"
+      }
+    }
+  },
+  "files": [
+    "lib",
+    "esm",
+    "types"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/statebacked/headless.git"

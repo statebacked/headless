@@ -23,10 +23,10 @@ function install() {
     createMachine(root, aggregateRatingMachinePath, aggregateRatingMachineName),
   ])
     .then(() => {
-      console.log("Created machines");
+      console.log("Installed anonymous-ratings");
     })
     .catch((err) => {
-      console.error("Failed to create machines", err);
+      console.error("Failed to install anonymous-ratings", err);
     });
 }
 

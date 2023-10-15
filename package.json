@@ -1,6 +1,6 @@
 {
   "name": "@statebacked/headless",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Headless backend components",
   "scripts": {
     "prettier": "prettier --write src",
@@ -14,7 +14,7 @@
   "main": "lib/index.js",
   "module": "esm/index.js",
   "types": "types/index.d.ts",
-  "bin": "./dist/scripts/install.js",
+  "bin": "./build/scripts/install.js",
   "exports": {
     ".": {
       "types": {

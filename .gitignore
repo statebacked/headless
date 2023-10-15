@@ -130,6 +130,7 @@ dist
 .pnp.*
 
 dist/
+build/
 esm/
 lib/
 types/

@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "description": "Headless backend components",
   "scripts": {
-    "prettier": "prettier --write src scripts",
-    "build": "tsc --outDir dist",
-    "prepublishOnly": "rollup --config rollup.config.mjs && tsc --emitDeclarationOnly --declaration --outDir types && echo '{ \"type\": \"commonjs\" }' > lib/package.json",
-    "install-feature": "npm run build && node scripts/install.mjs",
+    "prettier": "prettier --write src",
+    "build": "tsc --outDir build",
+    "prepublishOnly": "npm run build && rollup --config rollup.config.mjs && tsc --emitDeclarationOnly --declaration --outDir types && echo '{ \"type\": \"commonjs\" }' > lib/package.json",
+    "install-feature": "npm run build && node dist/scripts/install.js",
     "smply": "smply",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,6 +14,7 @@
   "main": "lib/index.js",
   "module": "esm/index.js",
   "types": "types/index.d.ts",
+  "bin": "./dist/scripts/install.js",
   "exports": {
     ".": {
       "types": {
@@ -27,6 +28,7 @@
     }
   },
   "files": [
+    "build",
     "lib",
     "esm",
     "types"
@@ -53,6 +55,7 @@
   "dependencies": {
     "@statebacked/client": "^0.1.37",
     "@statebacked/machine": "^0.6.0",
+    "smply": "^0.1.17",
     "xstate": "^4.38.2"
   },
   "devDependencies": {
@@ -62,7 +65,6 @@
     "prettier": "^3.0.3",
     "react": "^18.2.0",
     "rollup": "^3.28.1",
-    "smply": "^0.1.17",
     "typescript": "^5.2.2"
   }
 }

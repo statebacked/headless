@@ -20,7 +20,7 @@ async function setup() {
 }
 
 async function ensureDefaultOrg() {
-  const orgs = await new Promise((res, rej) => {
+  const orgs = await new Promise<Array<any>>((res, rej) => {
     const orgsParts = [];
     spawn("smply", ["orgs", "list"], { shell: false, stdio: "pipe" })
       .on("exit", (code) => {
@@ -43,9 +43,12 @@ async function ensureDefaultOrg() {
 
   if (orgCount === 0) {
     await new Promise((res, rej) => {
-      spawn("smply", ["orgs", "create", "--name", "Headless"], { shell: false, stdio: "inherit" }).on("exit", (code) => {
+      spawn("smply", ["orgs", "create", "--name", "Headless"], {
+        shell: false,
+        stdio: "inherit",
+      }).on("exit", (code) => {
         if (code === 0) {
-          res();
+          res(null);
         } else {
           rej();
         }
@@ -58,7 +61,10 @@ async function ensureDefaultOrg() {
   if (orgCount > 0) {
     const defaultOrg = await new Promise((res, rej) => {
       const parts = [];
-      spawn("smply", ["orgs", "default", "get"], { shell: false, stdio: "pipe" })
+      spawn("smply", ["orgs", "default", "get"], {
+        shell: false,
+        stdio: "pipe",
+      })
         .on("exit", (code) => {
           if (code !== 0) {
             console.log(code);
@@ -85,22 +91,31 @@ async function ensureDefaultOrg() {
     });
 
     if (defaultOrg) {
-      const useDefault = await rl.question(`Use ${defaultOrg} as the default organization? [Y/n] `);
+      const useDefault = await rl.question(
+        `Use ${defaultOrg} as the default organization? [Y/n] `,
+      );
       if (useDefault.toLowerCase() === "y" || useDefault === "") {
         rl.close();
         return;
       }
     }
 
-    console.log("You have multiple organizations. Please select one to use as the default.");
+    console.log(
+      "You have multiple organizations. Please select one to use as the default.",
+    );
     console.log(JSON.stringify(orgs, null, 2));
-    const orgId = await rl.question("Enter the ID of the organization to use: ");
+    const orgId = await rl.question(
+      "Enter the ID of the organization to use: ",
+    );
     rl.close();
 
     await new Promise((res, rej) => {
-      spawn("smply", ["orgs", "default", "set", "--org", orgId], { shell: false, stdio: "ignore" }).on("exit", (code) => {
+      spawn("smply", ["orgs", "default", "set", "--org", orgId], {
+        shell: false,
+        stdio: "ignore",
+      }).on("exit", (code) => {
         if (code === 0) {
-          res();
+          res(null);
         } else {
           rej();
         }
@@ -111,25 +126,33 @@ async function ensureDefaultOrg() {
 
 async function ensureLoggedIn() {
   const isLoggedIn = await new Promise((res, rej) => {
-    spawn("smply", ["whoami"], { shell: false, stdio: "ignore" }).on("exit", (code) => {
-      res(code === 0)
-    });
+    spawn("smply", ["whoami"], { shell: false, stdio: "ignore" }).on(
+      "exit",
+      (code) => {
+        res(code === 0);
+      },
+    );
   });
 
   if (isLoggedIn) {
     return;
   }
 
-  console.log("Log in or create a StateBacked.dev account to manage headless features.")
+  console.log(
+    "Log in or create a StateBacked.dev account to manage headless features.",
+  );
 
   await new Promise((res, rej) => {
-    spawn("smply", ["login"], { shell: false, stdio: "inherit" }).on("exit", (code) => {
-      if (code === 0) {
-        res();
-      } else {
-        rej();
-      }
-    });
+    spawn("smply", ["login"], { shell: false, stdio: "inherit" }).on(
+      "exit",
+      (code) => {
+        if (code === 0) {
+          res(null);
+        } else {
+          rej();
+        }
+      },
+    );
   });
 }
 
@@ -144,7 +167,6 @@ function install() {
             path.join(
               __dirname,
               "..",
-              "dist",
               "features",
               feature,
               "scripts",
@@ -159,7 +181,7 @@ function install() {
 
         proc.on("exit", () => {
           if (proc.exitCode === 0) {
-            res();
+            res(null);
           } else {
             rej();
           }

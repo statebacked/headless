@@ -1,0 +1,13 @@
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+}
+
+.buttons button:hover {
+  cursor: pointer;
+}
+
+.chosen {
+  background-color: yellow;
+}

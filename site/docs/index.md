@@ -3,6 +3,7 @@ slug: /
 sidebar_position: 1
 title: Getting Started
 ---
+import { Rating } from "../src/components/rating";
 
 # Getting started with State Backed Headless Features
 
@@ -70,6 +71,10 @@ export const YourComponent = () => {
   );
 }
 ```
+
+### Live example
+
+<Rating />
 
 ## Open source
 

@@ -1,1 +1,1 @@
-export * from "./hooks/useAnonymousRating";
+export * from "./hooks/useUnauthenticatedRating";

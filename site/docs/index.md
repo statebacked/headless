@@ -1,3 +1,9 @@
+---
+slug: /
+sidebar_position: 1
+title: Getting Started
+---
+
 # Getting started with State Backed Headless Features
 
 Headless features are full-bodied, production-ready features, complete with scalable backend data storage, available through simple React hooks.

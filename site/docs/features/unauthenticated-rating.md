@@ -72,5 +72,18 @@ export const YourComponent = () => {
 
 - `orgId`: The ID for the State Backed organization that you installed the feature in (printed when running `npx @statebacked/headless install unauthenticated-ratings`)
 - `itemId`: The ID of the item being rated
-- `userId`: The optional ID of the current user. If not provided, a random ID will be used and stored in `localStorage`.
-- `localStorageKey`: The optional key to use to store the user ID in `localStorage`. Defaults to "headless-rating-user-id".
+- `userId?`: The optional ID of the current user. If not provided, a random ID will be used and stored in `localStorage`.
+- `localStorageKey?`: The optional key to use to store the user ID in `localStorage`. Defaults to "headless-rating-user-id".
+
+## Return properties
+
+- `state`: "loading" | "unrated" | "error" | "rated"
+- `error?`: Any error that occurred (set if state === "error")
+- `rating?`: The average rating of the item across all users (set if state === "rated")
+- `isLoading`: True if state === "loading"
+- `isError`: True if state === "error"
+- `hasRating`: True if state === "rated", indicating at least one user has rated the item
+- `hasUserRated`: True if the current user has rated the item
+- `userRating?`: The current user's rating of the item
+- `ratingCount?`: The total number of users who have rated the item
+- `rate`: Function that accepts a rating for the current user and saves it

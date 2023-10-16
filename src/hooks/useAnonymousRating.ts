@@ -4,7 +4,7 @@ import { useLocalStorage } from "./useLocalStorage";
 import {
   ratingMachineName,
   aggregateRatingMachineName,
-} from "../features/anonymous-ratings/constants";
+} from "../features/unauthenticated-ratings/constants";
 import type { Context as AggregateRatingContext } from "../machines/aggregate-rating-machine";
 import type { Context as RatingContext } from "../machines/rating-machine";
 

@@ -4,22 +4,55 @@ import * as url from "node:url";
 import { spawn } from "node:child_process";
 import * as path from "node:path";
 import * as readline from "node:readline/promises";
+import * as fs from "node:fs/promises";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+const argv = process.argv.slice(2); // remove ["node", "install.mjs"]
 
 main();
 
 async function main() {
-  await setup();
-  await install();
+  const command = argv.length === 0 ? "list" : argv[0];
+
+  if (command === "list") {
+    await list();
+    return;
+  }
+
+  if (command !== "install") {
+    console.error(
+      "usage: `npx @statebacked/headless install [feature...]` or `npx @statebacked/headless list`",
+    );
+    process.exit(1);
+    return;
+  }
+
+  // install
+
+  const features = argv.slice(1); // remove "install"
+  const orgId = await setup();
+  await install(features);
+
+  console.log("IMPORTANT: pass this orgId to your headless hooks: " + orgId);
+}
+
+async function list() {
+  const features = await fs.readdir(path.join(__dirname, "..", "features"));
+  console.log("Available features:");
+  console.log(" - " + features.join("\n - "));
+  console.log("");
+  console.log(
+    "To install a feature, run `npx @statebacked/headless install <feature>`",
+  );
 }
 
 async function setup() {
   await ensureLoggedIn();
-  await ensureDefaultOrg();
+  const orgId = await ensureDefaultOrg();
+  return orgId;
 }
 
-async function ensureDefaultOrg() {
+async function ensureDefaultOrg(): Promise<string> {
   const orgs = await new Promise<Array<any>>((res, rej) => {
     const orgsParts = [];
     spawn("smply", ["orgs", "list"], { shell: false, stdio: "pipe" })
@@ -42,24 +75,27 @@ async function ensureDefaultOrg() {
   const orgCount = orgs.length;
 
   if (orgCount === 0) {
-    await new Promise((res, rej) => {
+    const orgParts = [];
+    return new Promise<string>((res, rej) => {
       spawn("smply", ["orgs", "create", "--name", "Headless"], {
         shell: false,
         stdio: "inherit",
-      }).on("exit", (code) => {
-        if (code === 0) {
-          res(null);
-        } else {
-          rej();
-        }
-      });
+      })
+        .on("exit", (code) => {
+          if (code === 0) {
+            res(JSON.parse(Buffer.concat(orgParts).toString("utf8")).orgId);
+          } else {
+            rej();
+          }
+        })
+        .stdout.on("data", (data) => {
+          orgParts.push(data);
+        });
     });
-
-    return;
   }
 
   if (orgCount > 0) {
-    const defaultOrg = await new Promise((res, rej) => {
+    const defaultOrg = await new Promise<string | null>((res, rej) => {
       const parts = [];
       spawn("smply", ["orgs", "default", "get"], {
         shell: false,
@@ -96,7 +132,7 @@ async function ensureDefaultOrg() {
       );
       if (useDefault.toLowerCase() === "y" || useDefault === "") {
         rl.close();
-        return;
+        return defaultOrg;
       }
     }
 
@@ -121,6 +157,8 @@ async function ensureDefaultOrg() {
         }
       });
     });
+
+    return orgId;
   }
 }
 
@@ -156,8 +194,7 @@ async function ensureLoggedIn() {
   });
 }
 
-function install() {
-  const features = process.argv.slice(2); // remove ["node", "install.mjs"]
+function install(features: Array<string>) {
   return Promise.all(
     features.map((feature) => {
       new Promise((res, rej) => {

@@ -1,2 +1,3 @@
-export const ratingMachineName = "authenticated-rating";
-export const aggregateRatingMachineName = "authenticated-aggregate-rating";
+export const ratingMachineName = "headless-authenticated-rating";
+export const aggregateRatingMachineName =
+  "headless-authenticated-aggregate-rating";

@@ -6,7 +6,7 @@
     "prettier": "prettier --write src",
     "build": "tsc --outDir build",
     "prepublishOnly": "npm run build && rollup --config rollup.config.mjs && tsc --emitDeclarationOnly --declaration --outDir types && echo '{ \"type\": \"commonjs\" }' > lib/package.json",
-    "install-feature": "npm run build && node dist/scripts/install.js",
+    "install-feature": "npm run build && node build/scripts/install.js",
     "smply": "smply",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

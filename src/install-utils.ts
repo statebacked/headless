@@ -4,13 +4,16 @@ import { spawn } from "node:child_process";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
-function machinePath(machineName: string) {
-  return path.join(__dirname, "machines", machineName + ".js");
+function featureMachinePath(featureName: string, machineName: string) {
+  return path.join(__dirname, "features", featureName, machineName + ".js");
 }
 
-export function createMachine(machineName: string, localMachineName: string) {
+export function createMachine(
+  machineName: string,
+  featureName: string,
+  featureMachineName: string,
+) {
   const rootPath = path.join(__dirname, "..");
-  console.log("MACHINE PATH", machinePath(localMachineName));
   return new Promise((res, rej) => {
     const proc = spawn(
       "smply",
@@ -20,7 +23,7 @@ export function createMachine(machineName: string, localMachineName: string) {
         "--machine",
         machineName,
         "--node",
-        machinePath(localMachineName),
+        featureMachinePath(featureName, featureMachineName),
       ],
       {
         shell: false,

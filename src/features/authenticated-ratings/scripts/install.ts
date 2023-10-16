@@ -7,8 +7,12 @@ install();
 
 function install() {
   Promise.all([
-    createMachine(ratingMachineName, "rating-machine"),
-    createMachine(aggregateRatingMachineName, "aggregate-rating-machine"),
+    createMachine(ratingMachineName, "authenticated-ratings", "rating"),
+    createMachine(
+      aggregateRatingMachineName,
+      "authenticated-ratings",
+      "aggregate-rating",
+    ),
   ])
     .then(() => {
       console.log("Installed authenticated-ratings");

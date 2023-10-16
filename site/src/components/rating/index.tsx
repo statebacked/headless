@@ -1,8 +1,17 @@
 import React from "react";
 import { useUnauthenticatedRating } from "@statebacked/headless";
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import styles from "./rating.module.css";
 
 export const Rating = () => {
+  return (
+    <BrowserOnly>
+      {() => <_Rating />}
+    </BrowserOnly>
+  )
+}
+
+const _Rating = () => {
   const {
     error,
     rating,

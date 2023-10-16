@@ -174,7 +174,7 @@ export const useUnauthenticatedRating = (
           type: "rate",
           item: props.itemId,
           rater: userId,
-          rating,
+          rating: newRating,
         },
       });
     },

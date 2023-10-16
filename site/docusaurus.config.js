@@ -6,8 +6,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'State Backed Headless Features',
+  tagline: 'Open source, full-bodied features with a backend included, accessible via simple React hooks.',
   favicon: 'img/favicon.png',
 
   // Set the production url of your site here
@@ -58,9 +58,9 @@ const config = {
     ({
       image: 'img/headless-social.png',
       navbar: {
-        title: 'State Backed Headless Hooks',
+        title: 'State Backed Headless Features',
         logo: {
-          alt: 'State Backed Headless Hooks',
+          alt: 'State Backed Headless Features',
           src: 'img/logo.svg',
         },
         items: [

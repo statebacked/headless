@@ -196,35 +196,34 @@ async function ensureLoggedIn() {
 
 function install(features: Array<string>) {
   return Promise.all(
-    features.map((feature) => {
-      new Promise((res, rej) => {
-        const proc = spawn(
-          "node",
-          [
-            path.join(
-              __dirname,
-              "..",
-              "features",
-              feature,
-              "scripts",
-              "install.js",
-            ),
-          ],
-          {
-            shell: false,
-            stdio: "inherit",
-          },
-        );
-
-        proc.on("exit", () => {
-          if (proc.exitCode === 0) {
-            res(null);
-          } else {
-            rej();
-          }
-        });
-      });
-    }),
+    features.map(
+      (feature) =>
+        new Promise((res, rej) => {
+          spawn(
+            "node",
+            [
+              path.join(
+                __dirname,
+                "..",
+                "features",
+                feature,
+                "scripts",
+                "install.js",
+              ),
+            ],
+            {
+              shell: false,
+              stdio: "inherit",
+            },
+          ).on("exit", (exitCode) => {
+            if (exitCode === 0) {
+              res(null);
+            } else {
+              rej();
+            }
+          });
+        }),
+    ),
   )
     .then(() => {
       console.log("Installed features");

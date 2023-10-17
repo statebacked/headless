@@ -32,6 +32,10 @@ const config = {
     locales: ['en'],
   },
 
+  scripts: [
+    {src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': 'headless.statebacked.dev'},
+  ],
+
   presets: [
     [
       'classic',

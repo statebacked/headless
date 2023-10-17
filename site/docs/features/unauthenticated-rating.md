@@ -8,6 +8,12 @@ import { Rating } from "../../src/components/rating";
 `useUnauthenticatedRating` is a feature that implements user ratings of any items.
 Each user can rate and update their rating and we provide an average rating with a count of how many users have rated each item.
 
+**Unauthenticated?**
+
+The backend for this hook doesn't validate user identities.
+This means that it relies on whatever userID you pass to it or generates a random ID tied to the user's device.
+Unauthenticated features require no additional setup and are suitable for situations where users should not have to log in before interacting with the feature or where you don't want to connect your identity provider.
+
 ## Installation
 
 Install with `npx @simplystated/headless install unauthenticated-ratings`.

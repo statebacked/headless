@@ -50,5 +50,5 @@ export const useUnauthenticatedRating = (
     userId,
     ratingMachineName,
     aggregateRatingMachineName,
-  })
+  });
 };

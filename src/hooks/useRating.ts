@@ -27,9 +27,13 @@ export type Rating = {
   rate: (rating: number) => Promise<void>;
 };
 
-export const useRating = (
-  { client, userId, ratingMachineName, aggregateRatingMachineName, ...props}: UseRatingProps,
-): Rating => {
+export const useRating = ({
+  client,
+  userId,
+  ratingMachineName,
+  aggregateRatingMachineName,
+  ...props
+}: UseRatingProps): Rating => {
   const [rating, setRating] = useState<
     "loading" | "unrated" | Error | { count: number; totalRating: number }
   >("loading");

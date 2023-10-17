@@ -7,6 +7,7 @@ import {
 } from "../features/unauthenticated-ratings/constants";
 import type { Context as AggregateRatingContext } from "../machines/aggregate-rating-machine";
 import type { Context as RatingContext } from "../machines/rating-machine";
+import { toValidIdentifier } from "../utils";
 
 const defaultLocalStorageKey = "headless-rating-user-id";
 
@@ -41,7 +42,8 @@ export const useUnauthenticatedRating = (
   >("loading");
   const [userId] = useLocalStorage(
     props.localStorageKey ?? defaultLocalStorageKey,
-    () => props.userId ?? crypto.randomUUID(),
+    () =>
+      props.userId ? toValidIdentifier(props.userId) : crypto.randomUUID(),
   );
   const client = useMemo(
     () =>
@@ -59,6 +61,8 @@ export const useUnauthenticatedRating = (
     [props.orgId, userId],
   );
 
+  const itemId = toValidIdentifier(props.itemId);
+
   useEffect(() => {
     const abort = new AbortController();
 
@@ -67,10 +71,10 @@ export const useUnauthenticatedRating = (
         setRating("loading");
         const ratingState = await client.machineInstances.getOrCreate(
           aggregateRatingMachineName,
-          props.itemId,
+          itemId,
           () => ({
             context: {
-              item: props.itemId,
+              item: itemId,
             },
           }),
           abort.signal,
@@ -93,7 +97,7 @@ export const useUnauthenticatedRating = (
     return () => {
       abort.abort();
     };
-  }, [props.itemId]);
+  }, [itemId]);
 
   useEffect(() => {
     const abort = new AbortController();
@@ -103,7 +107,7 @@ export const useUnauthenticatedRating = (
         setUserRating("loading");
         const userRatingState = await client.machineInstances.get(
           ratingMachineName,
-          ratingMachineInstanceName({ userId, itemId: props.itemId }),
+          ratingMachineInstanceName({ userId, itemId }),
           abort.signal,
         );
 
@@ -126,7 +130,7 @@ export const useUnauthenticatedRating = (
     return () => {
       abort.abort();
     };
-  }, [props.itemId, userId]);
+  }, [itemId, userId]);
 
   const rate = useCallback(
     async (newRating: number) => {
@@ -157,14 +161,14 @@ export const useUnauthenticatedRating = (
 
       const instanceName = ratingMachineInstanceName({
         userId,
-        itemId: props.itemId,
+        itemId,
       });
       const userRatingState = await client.machineInstances.getOrCreate(
         ratingMachineName,
         instanceName,
         () => ({
           context: {
-            item: props.itemId,
+            item: itemId,
             rater: userId,
           },
         }),
@@ -172,13 +176,13 @@ export const useUnauthenticatedRating = (
       await client.machineInstances.sendEvent(ratingMachineName, instanceName, {
         event: {
           type: "rate",
-          item: props.itemId,
+          item: itemId,
           rater: userId,
           rating: newRating,
         },
       });
     },
-    [rating, userId, props.itemId, userRating],
+    [rating, userId, itemId, userRating],
   );
 
   const state =

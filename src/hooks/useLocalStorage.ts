@@ -14,7 +14,7 @@ export const useLocalStorage = (
     [key],
   );
 
-  if (typeof localValue === "undefined") {
+  if (localValue === null) {
     const item = initialValue();
     setValue(item);
     return [item, setValue];

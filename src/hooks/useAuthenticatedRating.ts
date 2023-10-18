@@ -1,10 +1,9 @@
-import { useMemo } from "react";
-import { StateBackedClient } from "@statebacked/client";
 import {
   ratingMachineName,
   aggregateRatingMachineName,
 } from "../features/authenticated-rating/constants";
 import { Rating, useRating } from "./useRating";
+import { useAuthenticatedClient } from "./useAuthenticatedClient";
 
 export type UseAuthenticatedRatingProps = {
   orgId: string;
@@ -17,21 +16,10 @@ export type UseAuthenticatedRatingProps = {
 export type AuthenticatedRating = Rating;
 
 export const useAuthenticatedRating = ({
-  orgId,
-  identityProviderToken,
-  tokenProviderService,
   userId,
   ...props
 }: UseAuthenticatedRatingProps): AuthenticatedRating => {
-  const client = useMemo(
-    () =>
-      new StateBackedClient({
-        identityProviderToken: identityProviderToken,
-        orgId: orgId,
-        tokenProviderService: tokenProviderService ?? "headless-state-backed",
-      }),
-    [orgId, identityProviderToken, tokenProviderService],
-  );
+  const client = useAuthenticatedClient(props);
 
   return useRating({
     ...props,

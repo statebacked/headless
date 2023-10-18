@@ -6,7 +6,7 @@
     "prettier": "prettier --write src",
     "build": "tsc --outDir build",
     "prepublishOnly": "npm run build && rollup --config rollup.config.mjs && tsc --emitDeclarationOnly --declaration --outDir types && echo '{ \"type\": \"commonjs\" }' > lib/package.json",
-    "install-feature": "npm run build && node build/scripts/install.js",
+    "cli": "npm run build && node build/scripts/cli.js",
     "smply": "smply",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,7 +14,7 @@
   "main": "lib/index.js",
   "module": "esm/index.js",
   "types": "types/index.d.ts",
-  "bin": "./build/scripts/install.js",
+  "bin": "./build/scripts/cli.js",
   "exports": {
     ".": {
       "types": {

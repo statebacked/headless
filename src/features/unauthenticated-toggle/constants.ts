@@ -1,1 +1,1 @@
-export const toggleMachineName = "headless-authenticated-toggle";
+export const toggleMachineName = "headless-unauthenticated-toggle";

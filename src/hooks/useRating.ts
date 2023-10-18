@@ -4,8 +4,6 @@ import type { Context as AggregateRatingContext } from "../machines/aggregate-ra
 import type { Context as RatingContext } from "../machines/rating-machine";
 import { toValidIdentifier } from "../utils";
 
-const defaultLocalStorageKey = "headless-rating-user-id";
-
 export type UseRatingProps = {
   client: StateBackedClient;
   itemId: string;

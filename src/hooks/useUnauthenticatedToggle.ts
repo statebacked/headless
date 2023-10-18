@@ -1,8 +1,7 @@
-import { useMemo } from "react";
-import { StateBackedClient } from "@statebacked/client";
 import { toggleMachineName } from "../features/unauthenticated-toggle/constants";
 import { useUserId } from "./useUserId";
 import { Toggle, useToggle } from "./useToggle";
+import { useUnauthenticatedClient } from "./useUnauthenticatedClient";
 
 export type UseUnauthenticatedToggleProps = {
   orgId: string;
@@ -21,21 +20,11 @@ export const useUnauthenticatedToggle = (
     userId: props.userId,
   });
 
-  const client = useMemo(
-    () =>
-      new StateBackedClient({
-        anonymous: {
-          orgId: props.orgId,
-          getDeviceId() {
-            return userId;
-          },
-          getSessionId() {
-            return userId;
-          },
-        },
-      }),
-    [props.orgId, userId],
-  );
+  const client = useUnauthenticatedClient({
+    userId,
+    orgId: props.orgId,
+    localStorageKey: props.localStorageKey,
+  });
 
   return useToggle({
     ...props,

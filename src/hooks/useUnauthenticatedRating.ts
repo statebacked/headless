@@ -1,11 +1,10 @@
-import { useMemo } from "react";
-import { StateBackedClient } from "@statebacked/client";
 import {
   ratingMachineName,
   aggregateRatingMachineName,
 } from "../features/unauthenticated-rating/constants";
 import { Rating, useRating } from "./useRating";
 import { useUserId } from "./useUserId";
+import { useUnauthenticatedClient } from "./useUnauthenticatedClient";
 
 export type UseUnauthenticatedRatingProps = {
   orgId: string;
@@ -24,21 +23,11 @@ export const useUnauthenticatedRating = (
     userId: props.userId,
   });
 
-  const client = useMemo(
-    () =>
-      new StateBackedClient({
-        anonymous: {
-          orgId: props.orgId,
-          getDeviceId() {
-            return userId;
-          },
-          getSessionId() {
-            return userId;
-          },
-        },
-      }),
-    [props.orgId, userId],
-  );
+  const client = useUnauthenticatedClient({
+    orgId: props.orgId,
+    userId,
+    localStorageKey: props.localStorageKey,
+  });
 
   return useRating({
     ...props,

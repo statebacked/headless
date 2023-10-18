@@ -3,7 +3,7 @@ import { StateBackedClient } from "@statebacked/client";
 import {
   ratingMachineName,
   aggregateRatingMachineName,
-} from "../features/authenticated-ratings/constants";
+} from "../features/authenticated-rating/constants";
 import { Rating, useRating } from "./useRating";
 
 export type UseAuthenticatedRatingProps = {

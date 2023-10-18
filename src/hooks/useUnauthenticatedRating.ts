@@ -4,11 +4,11 @@ import { useLocalStorage } from "./useLocalStorage";
 import {
   ratingMachineName,
   aggregateRatingMachineName,
-} from "../features/unauthenticated-ratings/constants";
+} from "../features/unauthenticated-rating/constants";
 import { toValidIdentifier } from "../utils";
 import { Rating, useRating } from "./useRating";
 
-const defaultLocalStorageKey = "headless-rating-user-id";
+const defaultLocalStorageKey = "headless-user-id";
 
 export type UseUnauthenticatedRatingProps = {
   orgId: string;

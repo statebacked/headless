@@ -7,13 +7,13 @@ install();
 
 function install() {
   Promise.all([
-    createMachine(toggleMachineName, "authenticated-toggle", "toggle"),
+    createMachine(toggleMachineName, "unauthenticated-toggle", "toggle"),
   ])
     .then(() => {
-      console.log("Installed authenticated-toggle");
+      console.log("Installed unauthenticated-toggle");
     })
     .catch((err) => {
-      console.error("Failed to install authenticated-toggle", err);
+      console.error("Failed to install unauthenticated-toggle", err);
       process.exit(1);
     });
 }

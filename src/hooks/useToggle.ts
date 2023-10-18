@@ -33,6 +33,11 @@ export const useToggle = ({
 
   const itemId = toValidIdentifier(props.itemId);
 
+  const instanceName = toggleMachineInstanceName({
+    userId,
+    itemId,
+  });
+
   useEffect(() => {
     const abort = new AbortController();
 
@@ -41,7 +46,7 @@ export const useToggle = ({
         setToggled("loading");
         const toggleState = await client.machineInstances.getOrCreate(
           toggleMachineName,
-          itemId,
+          instanceName,
           () => ({
             context: {
               item: itemId,
@@ -62,37 +67,29 @@ export const useToggle = ({
     return () => {
       abort.abort();
     };
-  }, [itemId]);
+  }, [itemId, userId, instanceName]);
 
   const toggle = useCallback(async () => {
     setToggled(!toggled);
 
-    const instanceName = toggleMachineInstanceName({
-      userId,
-      itemId,
-    });
     await client.machineInstances.sendEvent(toggleMachineName, instanceName, {
       event: {
         type: "toggle",
       },
     });
-  }, [toggled, userId, itemId]);
+  }, [toggled, instanceName]);
 
   const set = useCallback(
     async (value: boolean) => {
       setToggled(value);
 
-      const instanceName = toggleMachineInstanceName({
-        userId,
-        itemId,
-      });
       await client.machineInstances.sendEvent(toggleMachineName, instanceName, {
         event: {
           type: value ? "turnOn" : "turnOff",
         },
       });
     },
-    [toggled, userId, itemId],
+    [instanceName],
   );
 
   const turnOn = useCallback(async () => set(true), [set]);

@@ -1,12 +1,15 @@
 import { createMachine } from "xstate";
 
-export type Event = {
-  type: "toggle";
-} | {
-  type: "turnOn"
-} | {
-  type: "turnOff"
-};
+export type Event =
+  | {
+      type: "toggle";
+    }
+  | {
+      type: "turnOn";
+    }
+  | {
+      type: "turnOff";
+    };
 
 export type Context = {
   item: string;
@@ -35,11 +38,11 @@ export const makeToggleMachine = (id: string) =>
       on: {
         on: {
           toggle: "off",
-        }
+        },
       },
       off: {
         on: {
-          toggle: "on"
+          toggle: "on",
         },
       },
     },

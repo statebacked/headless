@@ -91,10 +91,10 @@ export const YourComponent = () => {
 
 ## Parameters
 
-- `orgId`: The ID for the State Backed organization that you installed the feature in (printed when running `npx @statebacked/headless install unauthenticated-ratings`)
+- `orgId`: The ID for the State Backed organization that you installed the feature in (printed when running `npx @statebacked/headless install unauthenticated-rating`)
 - `itemId`: The ID of the item being rated
 - `userId?`: The optional ID of the current user. If not provided, a random ID will be used and stored in `localStorage`.
-- `localStorageKey?`: The optional key to use to store the user ID in `localStorage`. Defaults to "headless-rating-user-id".
+- `localStorageKey?`: The optional key to use to store the user ID in `localStorage`. Defaults to "headless-user-id".
 
 ## Return properties
 

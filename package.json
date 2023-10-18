@@ -55,7 +55,7 @@
   "dependencies": {
     "@statebacked/client": "^0.1.37",
     "@statebacked/machine": "^0.6.0",
-    "smply": "^0.1.17",
+    "smply": "^0.1.18",
     "xstate": "^4.38.2"
   },
   "devDependencies": {

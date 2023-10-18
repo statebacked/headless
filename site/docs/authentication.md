@@ -13,14 +13,14 @@ However, if you'd like to ensure that some features are only used to authenticat
 If you're using Auth0, run:
 
 ```bash
-npx @statebacked/headless setup-auth0-auth \
+npx @statebacked/headless setup-auth auth0 \
   --domain '<YOUR_AUTH0_DOMAIN>'
 ```
 
 For AWS Cognito:
 
 ```bash
-npx @statebacked/headless setup-cognito-auth \
+npx @statebacked/headless setup-auth cognito \
   --user-pool-id '<YOUR_COGNITO_USER_POOL_ID>' \
   --region '<AWS_REGION_FOR_USER_POOL>'
 ```
@@ -28,7 +28,7 @@ npx @statebacked/headless setup-cognito-auth \
 For Supabase:
 
 ```bash
-npx @statebacked/headless setup-supabase-auth \
+npx @statebacked/headless setup-auth supabase \
   --project '<SUPABASE_PROJCET_ID>' \
   --secret '<SUPABASE_JWT_SECRET>'
 ```

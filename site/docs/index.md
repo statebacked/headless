@@ -18,7 +18,7 @@ Then, you can use the corresponding React hook anywhere in your app. No backend 
 
 Our ratings feature allows you to easily add ratings (e.g. star ratings) to any entity in your app.
 
-1. Install it with `npx @statebacked/headless install unauthenticated-ratings`.
+1. Install it with `npx @statebacked/headless install unauthenticated-rating`.
 
 2. Then, you can use it like this:
 

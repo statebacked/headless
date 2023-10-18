@@ -22,13 +22,13 @@ Authenticated features require a [one-time setup](../authentication.md) and will
 
 Install the backend in your State Backed organization with:
 ```bash
-npx @statebacked/headless install unauthenticated-ratings
+npx @statebacked/headless install unauthenticated-rating
 ```
 
 or
 
 ```bash
-npx @statebacked/headless install authenticated-ratings
+npx @statebacked/headless install authenticated-rating
 ```
 
 Be sure to record the `orgId` provided by this command.

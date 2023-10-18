@@ -1,14 +1,11 @@
 import { useMemo } from "react";
 import { StateBackedClient } from "@statebacked/client";
-import { useLocalStorage } from "./useLocalStorage";
 import {
   ratingMachineName,
   aggregateRatingMachineName,
 } from "../features/unauthenticated-rating/constants";
-import { toValidIdentifier } from "../utils";
 import { Rating, useRating } from "./useRating";
-
-const defaultLocalStorageKey = "headless-user-id";
+import { useUserId } from "./useUserId";
 
 export type UseUnauthenticatedRatingProps = {
   orgId: string;
@@ -22,11 +19,10 @@ export type UnauthenticatedRating = Rating;
 export const useUnauthenticatedRating = (
   props: UseUnauthenticatedRatingProps,
 ): UnauthenticatedRating => {
-  const [userId] = useLocalStorage(
-    props.localStorageKey ?? defaultLocalStorageKey,
-    () =>
-      props.userId ? toValidIdentifier(props.userId) : crypto.randomUUID(),
-  );
+  const userId = useUserId({
+    localStorageKey: props.localStorageKey,
+    userId: props.userId,
+  });
 
   const client = useMemo(
     () =>

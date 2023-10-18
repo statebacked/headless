@@ -10,7 +10,7 @@ import { Rating } from "../src/components/rating";
 Headless features are full-bodied, production-ready features, complete with scalable backend data storage, available through simple React hooks.
 Connect any UI elements you'd like.
 
-To use any headless hook, you first install the feature by running `npx @simplystated/headless install <feature-name>`.
+To use any headless hook, you first install the feature by running `npx @statebacked/headless install <feature-name>`.
 
 Then, you can use the corresponding React hook anywhere in your app. No backend work to worry about.
 
@@ -18,7 +18,7 @@ Then, you can use the corresponding React hook anywhere in your app. No backend 
 
 Our ratings feature allows you to easily add ratings (e.g. star ratings) to any entity in your app.
 
-1. Install it with `npx @simplystated/headless install unauthenticated-ratings`.
+1. Install it with `npx @statebacked/headless install unauthenticated-ratings`.
 
 2. Then, you can use it like this:
 

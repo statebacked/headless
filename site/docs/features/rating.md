@@ -3,20 +3,34 @@ sidebar_position: 1
 ---
 import { Rating } from "../../src/components/rating";
 
-# Unauthenticated Rating
+# Rating
 
-`useUnauthenticatedRating` is a simple React hook with a ready-made, headless backend that you can pull into your app to implement user ratings of anything.
-Each user can rate and update their rating and we provide an average rating with a count of how many users have rated each item.
+`useUnauthenticatedRating` and `useAuthenticatedRating` are simple React hooks with ready-made, headless backends that you can pull into your app to implement user ratings of anything.
 
-**Unauthenticated?**
+## Features
 
-The backend for this hook doesn't validate user identities.
-This means that it relies on whatever `userId` you pass to it or generates a random ID tied to the user's device.
+Each of your users can rate and update their rating on any item and we provide an average rating with a count of how many users have rated each item.
+
+### Authenticated vs Un-Authenticated
+
+The backend for the *un*-authenticated hook doesn't validate user identities and the backend for the authenticated hook does validate user identities.
+This means that the *un*-authenticated relies on whatever `userId` you pass to it or generates a random ID tied to the user's device.
 Unauthenticated features require no additional setup and are suitable for situations where users should not have to log in before interacting with the feature or where you don't want to connect your identity provider.
+Authenticated features require a [one-time setup](../authentication.md) and will require passing in the access token from your identity-provider at runtime.
 
 ## Installation
 
-Install the backend in your State Backed organization with `npx @simplystated/headless install unauthenticated-ratings`.
+Install the backend in your State Backed organization with:
+```bash
+npx @statebacked/headless install unauthenticated-ratings
+```
+
+or
+
+```bash
+npx @statebacked/headless install authenticated-ratings
+```
+
 Be sure to record the `orgId` provided by this command.
 
 ## Usage

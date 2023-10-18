@@ -7,18 +7,18 @@ install();
 
 function install() {
   Promise.all([
-    createMachine(ratingMachineName, "unauthenticated-ratings", "rating"),
+    createMachine(ratingMachineName, "unauthenticated-rating", "rating"),
     createMachine(
       aggregateRatingMachineName,
-      "unauthenticated-ratings",
+      "unauthenticated-rating",
       "aggregate-rating",
     ),
   ])
     .then(() => {
-      console.log("Installed unauthenticated-ratings");
+      console.log("Installed unauthenticated-rating");
     })
     .catch((err) => {
-      console.error("Failed to install unauthenticated-ratings", err);
+      console.error("Failed to install unauthenticated-rating", err);
       process.exit(1);
     });
 }

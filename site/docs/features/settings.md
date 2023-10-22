@@ -38,7 +38,7 @@ Be sure to record the `orgId` provided by this command.
 ## Usage
 
 ```javascript
-import { useUnauthenticatedToggle } from "@statebacked/headless";
+import { useUnauthenticatedSettings } from "@statebacked/headless";
 
 export const YourComponent = () => {
   const {

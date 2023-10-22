@@ -45,20 +45,21 @@ export const YourComponent = () => {
     error,
     value,
     isLoading,
-    toggle,
     set,
-  } = useUnauthenticatedToggle({
+  } = useUnauthenticatedSettings({
     // TODO: replace with your org ID, printed during the install
     orgId: "org_ORG-ID-FROM-INSTALL",
-    // TODO: replace with the ID of whatever we're rating
-    itemId: "id-of-the-item-we're-rating",
     // optional, will use a device-specific ID, stored in localStorage if not provided
     userId: "CURRENT_USER_ID",
+    defaultValue: {
+      colorMode: "dark",
+      homepage: "https://www.statebacked.dev/",
+    }
   });
 
   if (error) {
     return (
-      <p className="error">Oops, we're having some trouble loading your toggle state.</p>
+      <p className="error">Oops, we're having some trouble loading your settings.</p>
     );
   }
 
@@ -70,10 +71,23 @@ export const YourComponent = () => {
 
   return (
     <div>
-      <button onClick={toggle}>{value ? "Turn off" : "Turn on"}</button>
-      <button onClick={() => set(true)}>Turn on</button>
+      <fieldset>
+        <label>Color mode:</label>
+        <select value={value.colorMode} onChange={(e) => set({ colorMode: e.target.value })}>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </fieldset>
+      <fieldset>
+        <label>Homepage:</label>
+        <input
+          type="text"
+          value={value.homepage}
+          onChange={(e) => set({ homepage: e.target.value })}
+        />
+      </fieldset>
     </div>
-  )
+  );
 }
 ```
 
@@ -84,8 +98,8 @@ export const YourComponent = () => {
 ## Parameters
 
 - `orgId`: The ID for the State Backed organization that you installed the feature in (printed when running `npx @statebacked/headless install unauthenticated-settings`)
-- `namespace`: The namespace for this group of settings
 - `defaultValue`: The default settings for this namespace (used for any settings the user has not yet explicitly set)
+- `namespace`?: The namespace for this group of settings
 - `userId?`: The optional ID of the current user. If not provided, a random ID will be used and stored in `localStorage`.
 - `localStorageKey?`: The optional key to use to store the user ID in `localStorage`. Defaults to "headless-user-id".
 

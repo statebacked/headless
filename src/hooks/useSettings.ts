@@ -48,7 +48,7 @@ export const useSettings = <T extends Record<string, unknown>>({
           instanceName,
           () => ({
             context: {
-              item: namespace,
+              namespace,
               user: userId,
             },
           }),
